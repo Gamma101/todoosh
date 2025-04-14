@@ -1,45 +1,52 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import {View, Text} from 'react-native'
+import React from 'react'
+import {Stack, Tabs, useSegments} from "expo-router";
+import {Ionicons} from "@expo/vector-icons";
+import {Header} from "@react-navigation/elements";
+import "../../global.css"
+import { StatusBar } from "expo-status-bar";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+export default function _Layout() {
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const segments = useSegments()
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <>
+        <StatusBar style="dark" translucent={true} />
+        <Tabs screenOptions={{
+            tabBarItemStyle: {
+                alignItems: 'center',
+                flexDirection: 'row',
+
+            },
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#0062f2",
+            tabBarStyle: {
+                position: 'absolute',
+                marginBottom: 20,
+                borderRadius: 100,
+                marginHorizontal: 30,
+
+
+            },
+            headerTitleAlign: "center",
+
+        }}>
+            <Tabs.Screen name="index" options={{
+                tabBarIcon: ({size, color}) => <Ionicons name="book" size={size} color={color} />,
+                headerShown: false
+            }} />
+            <Tabs.Screen name="create" options={{
+                tabBarIcon: ({ color}) => <Ionicons name="add-circle" size={30} color={color} />,
+                headerShown: false,
+                tabBarStyle: {display: segments[1] === "create" ? 'none' : "flex"}
+            }} />
+            <Tabs.Screen name="settings" options={{
+                tabBarIcon: ({size, color}) => <Ionicons name="settings" size={size} color={color} />,
+                headerShown: false
+            }} />
+
+        </Tabs>
+        </>
+    )
 }
