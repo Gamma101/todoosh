@@ -52,3 +52,18 @@ export const deleteAllNotes = async () => {
         console.error("Error in clearNotes", error);
     }
 }
+
+export const changeNote = async (note: {id: string}) => {
+    try {
+        const value = await AsyncStorage.getItem('notes');
+        if (value !== null) {
+            const data = JSON.parse(value);
+            const filteredNotes = data.filter((oldNote: { id: string; }) => note.id !== oldNote.id);
+            console.log(note);
+            filteredNotes.push(note);
+            await AsyncStorage.setItem('notes', JSON.stringify(filteredNotes));
+        }
+    } catch (error) {
+        console.error("Error in getAllNotes", error);
+    }
+}

@@ -1,8 +1,6 @@
-import {View, Text} from 'react-native'
 import React from 'react'
 import {Stack, Tabs, useSegments} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
-import {Header} from "@react-navigation/elements";
 import "../../global.css"
 import { StatusBar } from "expo-status-bar";
 
