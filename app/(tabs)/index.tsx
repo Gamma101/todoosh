@@ -4,12 +4,14 @@ import {Header} from "@react-navigation/elements";
 import Note from "@/components/Note";
 import {addNote, deleteAllNotes, deleteNote, getAllNotes} from "@/lib/storage";
 import {uuid} from "expo-modules-core";
-import {useFocusEffect} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
+import colors from "@/constants/colors";
 
 export default function Index() {
 
     const [notes, setNotes] = React.useState([]);
+    const router = useRouter();
 
     const handleDeleteNote = async (id: string) => {
         await deleteNote(id); // Make sure you have this function in your storage lib
@@ -30,10 +32,10 @@ export default function Index() {
 
     return (
             <View style={{flex: 1}}>
-                <View className="bg-white py-5 pl-5 flex flex-row justify-between">
+                <View className="bg-white py-5 px-5 flex flex-row justify-between">
                     <Text className="text-3xl font-bold text-primary">Todoosh</Text>
-                    <TouchableOpacity onPress={() => {deleteAllNotes(); refreshNotes()}}>
-                        <Ionicons name="trash" size={30}/>
+                    <TouchableOpacity onPress={() => router.push("/(tabs)/create")}>
+                        <Ionicons name="add" size={30} color={colors.primary} />
                     </TouchableOpacity>
                 </View>
 

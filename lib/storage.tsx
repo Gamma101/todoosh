@@ -67,3 +67,4 @@ export const changeNote = async (note: {id: string}) => {
         console.error("Error in getAllNotes", error);
     }
 }
+
