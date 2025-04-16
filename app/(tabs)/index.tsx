@@ -1,4 +1,4 @@
-import {View, Text, TouchableWithoutFeedback, FlatList, SafeAreaView, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableWithoutFeedback, FlatList, SafeAreaView, TouchableOpacity, Image} from 'react-native'
 import React, {useEffect} from 'react'
 import {Header} from "@react-navigation/elements";
 import Note from "@/components/Note";
@@ -38,7 +38,10 @@ export default function Index() {
                         <Ionicons name="add" size={30} color={colors.primary} />
                     </TouchableOpacity>
                 </View>
-
+                {notes.length === 0 ? <View className="flex flex-col justify-center items-center bg-white m-5 p-3 rounded-2xl">
+                    <Image source={require("@/assets/images/empty.png")} resizeMode={"cover"} style={{width: 200, height: 200}} />
+                    <Text className="text-2xl text-gray-400">Quite empty here...</Text>
+                </View> :
                 <SafeAreaView style={{flex: 1}} className="pt-3">
                     {notes && (<FlatList style={{flex: 1, gap: 5}}
                                          className="flex gap-5"
@@ -52,6 +55,7 @@ export default function Index() {
 
                     />)}
                 </SafeAreaView>
+                }
             </View>
 
     )

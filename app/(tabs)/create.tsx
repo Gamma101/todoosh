@@ -68,9 +68,9 @@ export default function Create() {
             </ScrollView>
             <View className="flex items-center justify-center mb-20">
                 <TouchableWithoutFeedback onPress={() => router.back()}>
-                    <View style={{width: "50%"}} className="bg-primary rounded-full flex flex-row p-3 justify-center items-center">
-                        <Ionicons name={"arrow-back-outline"} color="white" size={30} />
-                        <Text className="text-white font-medium text-2xl">Go Back</Text>
+                    <View style={{width: "50%"}} className="border-2 border-primary rounded-full flex flex-row p-3 justify-center items-center">
+                        <Ionicons name={"arrow-back-outline"} color="#0062f2" size={30} />
+                        <Text className="text-primary font-medium text-2xl">Go Back</Text>
                     </View>
                 </TouchableWithoutFeedback>
             </View>
