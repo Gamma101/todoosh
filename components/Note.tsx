@@ -1,8 +1,9 @@
-import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet} from 'react-native'
+import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet, ScrollView} from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {GestureHandlerRootView, Swipeable} from "react-native-gesture-handler";
-import {changeNote, deleteNote} from "@/lib/storage"; // Make sure you have this import
+import {changeNote, deleteNote} from "@/lib/storage";
+import Category from "@/components/Category"; // Make sure you have this import
 
 export default function Note({ categories, id, isCompleted, text, title, endDate, onDelete}: {
     endDate: Date,
@@ -16,6 +17,13 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
 
     const [noteComplete, setNoteComplete] = React.useState<boolean>();
 
+    const noteCategories = () => {
+        return categories.map((category: string, i: number) => {
+            return <Category isJustToWatch={true} categoryName={category} key={i} />
+        })
+    }
+
+    const noteCategoriesComponent = noteCategories();
 
     const handleChangeNote = async () => {
         const updatedNote = {
@@ -52,27 +60,36 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
 
     return (
         <GestureHandlerRootView>
-            <Swipeable
-                renderRightActions={renderRightActions}
-                onSwipeableOpen={() => onDelete(id)}
-                rightThreshold={40}
-                friction={2}
-            >
-                <View className="flex flex-row gap-5 items-center my-2 bg-white p-5 w-[90%] self-center rounded-xl">
-                    <TouchableWithoutFeedback onPress={async () => {
-                        const newState = !noteComplete;
-                        setNoteComplete(newState);
-                        await handleChangeNote();
-                    }}>
-                        {noteComplete ? <Ionicons name="checkmark-circle-outline" className="bg-primary rounded-full" color="white" size={30} /> :
-                            <Ionicons name="ellipse-outline" className="rounded-full" color="black" size={30} />}
-                    </TouchableWithoutFeedback>
-                    <View>
-                        <Text style={noteComplete ? styles.doneNote : ""} className="font-bold">{title}</Text>
-                        <Text style={noteComplete ? styles.doneNote : ""} className="">{text.length > 20 ? text.slice(0, 25) + "..." : text}</Text>
+            <View className={`${noteComplete ? "bg-blue-100" : "bg-white"} p-2 w-[90%] self-center rounded-xl mb-5`}>
+                <Swipeable
+                    renderRightActions={renderRightActions}
+                    onSwipeableOpen={() => onDelete(id)}
+                    rightThreshold={40}
+                    friction={2}
+                >
+                    <View className={`flex flex-row items-center my-2 `}>
+                        <TouchableWithoutFeedback onPress={async () => {
+                            const newState = !noteComplete;
+                            setNoteComplete(newState);
+                            await handleChangeNote();
+                        }}>
+                            {noteComplete ? <Ionicons name="checkmark-circle-outline" className="bg-primary rounded-full" color="white" size={30} /> :
+                                <Ionicons name="ellipse-outline" className="rounded-full" color="black" size={30} />}
+                        </TouchableWithoutFeedback>
+                        <View className="ml-2">
+                            <Text style={noteComplete ? styles.doneNote : ""} className="font-bold">{title}</Text>
+                            {text.length > 0 && <Text style={noteComplete ? styles.doneNote : ""} className="">{text.length > 20 ? text.slice(0, 25) + "..." : text}</Text>}
+                        </View>
                     </View>
-                </View>
-            </Swipeable>
+
+                </Swipeable>
+                {categories.length > 0 &&
+                    <ScrollView horizontal>
+                    <View className="flex flex-row gap-2 p-3">
+                        {noteCategoriesComponent}
+                    </View>
+                </ScrollView>}
+            </View>
         </GestureHandlerRootView>
     )
 }

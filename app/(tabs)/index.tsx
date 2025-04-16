@@ -38,7 +38,7 @@ export default function Index() {
                         <Ionicons name="add" size={30} color={colors.primary} />
                     </TouchableOpacity>
                 </View>
-                {notes.length === 0 ? <View className="flex flex-col justify-center items-center bg-white m-5 p-3 rounded-2xl">
+                {notes.length === 0 ? <View className="flex flex-col justify-center items-center mt-32 m-5 p-3 rounded-2xl">
                     <Image source={require("@/assets/images/empty.png")} resizeMode={"cover"} style={{width: 200, height: 200}} />
                     <Text className="text-2xl text-gray-400">Quite empty here...</Text>
                 </View> :
