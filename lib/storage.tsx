@@ -59,7 +59,6 @@ export const changeNote = async (note: {id: string}) => {
         if (value !== null) {
             const data = JSON.parse(value);
             const filteredNotes = data.filter((oldNote: { id: string; }) => note.id !== oldNote.id);
-            console.log(note);
             filteredNotes.push(note);
             await AsyncStorage.setItem('notes', JSON.stringify(filteredNotes));
         }

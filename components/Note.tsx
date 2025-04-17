@@ -1,10 +1,11 @@
-import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet, ScrollView} from 'react-native'
+import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet, ScrollView, useColorScheme} from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {GestureHandlerRootView, Swipeable} from "react-native-gesture-handler";
 import {changeNote, deleteNote} from "@/lib/storage";
 import Category from "@/components/Category";
-import {formatDate, formatTime} from "@/lib/dateHandler"; // Make sure you have this import
+import {formatDate, formatTime} from "@/lib/dateHandler";
+import colors from "@/constants/colors"; // Make sure you have this import
 
 export default function Note({ categories, id, isCompleted, text, title, endDate, endTime, onDelete}: {
     endDate: Date,
@@ -16,6 +17,8 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
     title: string,
     onDelete: (id: string) => void // Add this prop
 }): JSX.Element {
+
+    const theme = useColorScheme()
 
     const [noteComplete, setNoteComplete] = React.useState<boolean>();
 
@@ -30,6 +33,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
     const handleChangeNote = async () => {
         const updatedNote = {
             endDate,
+            endTime,
             categories,
             id,
             text,
@@ -62,7 +66,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
 
     return (
         <GestureHandlerRootView>
-            <View className={`${noteComplete ? "bg-blue-100" : "bg-white"} p-2 w-[90%] self-center rounded-xl mb-5`}>
+            <View style={{backgroundColor: theme === "dark" ? colors.black : colors.white}} className={`${noteComplete ? "bg-blue-100" : "bg-white"} p-2 w-[90%] self-center rounded-xl mb-5`}>
                 <Swipeable
                     renderRightActions={renderRightActions}
                     onSwipeableOpen={() => onDelete(id)}
@@ -76,11 +80,11 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
                             await handleChangeNote();
                         }}>
                             {noteComplete ? <Ionicons name="checkmark-circle-outline" className="bg-primary rounded-full" color="white" size={30} /> :
-                                <Ionicons name="ellipse-outline" className="rounded-full" color="black" size={30} />}
+                                <Ionicons name="ellipse-outline" className="rounded-full" color={theme === "dark" ? "white" : "black"} size={30} />}
                         </TouchableWithoutFeedback>
                         <View className="ml-2">
-                            <Text style={noteComplete ? styles.doneNote : ""} className="font-bold">{title}</Text>
-                            {text.length > 0 && <Text style={noteComplete ? styles.doneNote : ""} className="">{text.length > 20 ? text.slice(0, 25) + "..." : text}</Text>}
+                            <Text style={{...noteComplete ? styles.doneNote : "", color: theme === "dark" ? colors.white : colors.black}} className="font-bold">{title}</Text>
+                            {text.length > 0 && <Text style={{...noteComplete ? styles.doneNote : "", color: theme === "dark" ? colors.white : colors.black}} className="">{text.length > 20 ? text.slice(0, 25) + "..." : text}</Text>}
                         </View>
                     </View>
 
@@ -97,14 +101,14 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
                         endTime &&
                         <View className="flex flex-row gap-2 px-3 items-center">
                             <Ionicons name="alarm-outline" size={20} color="white" className="bg-primary p-1 rounded-md" />
-                            <Text>{formatTime(new Date(endTime)).text}</Text>
+                            <Text style={{color: theme === "dark" ? colors.white : colors.black}}>{formatTime(new Date(endTime)).text}</Text>
                         </View>
                     }
                     {
                         endDate &&
                         <View className="flex flex-row gap-2 px-3 items-center">
                             <Ionicons name="calendar-outline" size={20} color="white" className="bg-primary p-1 rounded-md" />
-                            <Text>{formatDate(new Date(endDate)).text}</Text>
+                            <Text style={{color: theme === "dark" ? colors.white : colors.black}}>{formatDate(new Date(endDate)).text}</Text>
                         </View>
                     }
 

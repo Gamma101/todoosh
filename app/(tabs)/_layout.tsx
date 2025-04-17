@@ -3,28 +3,31 @@ import {Stack, Tabs, useSegments} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
 import "../../global.css"
 import { StatusBar } from "expo-status-bar";
+import {useColorScheme} from "react-native";
+import colors from "@/constants/colors";
 
 export default function _Layout() {
-
+    const theme = useColorScheme()
     const segments = useSegments()
 
     return (
         <>
-        <StatusBar style="dark" translucent={true} />
+        <StatusBar  style={theme === "dark" ? "light" : "dark"} backgroundColor={theme === "dark" ? "black" : "white"} translucent={true} />
         <Tabs screenOptions={{
             tabBarItemStyle: {
                 alignItems: 'center',
                 flexDirection: 'row',
-
             },
             tabBarShowLabel: false,
-            tabBarActiveTintColor: "#0062f2",
+            tabBarActiveTintColor: colors.primary,
             tabBarStyle: {
                 position: 'absolute',
                 marginBottom: 20,
                 borderRadius: 100,
                 marginHorizontal: 30,
-
+                backgroundColor: theme === "dark" ? colors.black : colors.white,
+                borderTopWidth: 0,
+                height: 50
 
             },
             headerTitleAlign: "center",

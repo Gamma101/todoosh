@@ -1,4 +1,13 @@
-import {View, Text, TouchableWithoutFeedback, FlatList, SafeAreaView, TouchableOpacity, Image} from 'react-native'
+import {
+    View,
+    Text,
+    TouchableWithoutFeedback,
+    FlatList,
+    SafeAreaView,
+    TouchableOpacity,
+    Image,
+    useColorScheme
+} from 'react-native'
 import React, {useEffect} from 'react'
 import {Header} from "@react-navigation/elements";
 import Note from "@/components/Note";
@@ -9,6 +18,7 @@ import {Ionicons} from "@expo/vector-icons";
 import colors from "@/constants/colors";
 
 export default function Index() {
+    const theme = useColorScheme()
 
     const [notes, setNotes] = React.useState([]);
     const router = useRouter();
@@ -31,8 +41,8 @@ export default function Index() {
     );
 
     return (
-            <View style={{flex: 1}}>
-                <View className="bg-white py-5 px-5 flex flex-row justify-between">
+            <View style={{flex: 1, backgroundColor: theme === "dark" ? colors.darkBg : colors.whiteBg}}>
+                <View style={{backgroundColor: theme === "dark" ? colors.black : colors.white}} className="py-5 px-5 flex flex-row justify-between">
                     <Text className="text-3xl font-bold text-primary">Todoosh</Text>
                     <TouchableOpacity onPress={() => router.push("/(tabs)/create")}>
                         <Ionicons name="add" size={30} color={colors.primary} />

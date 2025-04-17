@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     View,
-    Alert
+    Alert, useColorScheme
 } from 'react-native'
 import React, {useState} from 'react'
 import colors from "@/constants/colors";
@@ -25,6 +25,7 @@ export default function Create() {
     const [text, setText] = useState("");
     const [category, setCategory] = useState("");
     const [categories, setCategories]  = useState<string[]>([])
+    const theme = useColorScheme()
 
 
     const [date, setDate] = useState<Date | null>(null);
@@ -120,8 +121,8 @@ export default function Create() {
     );
 
     return (
-        <View style={styles.container}>
-            <View className="bg-white py-5 px-5 flex-row justify-between">
+        <View style={{...styles.container, backgroundColor: theme === "dark" ? colors.darkBg : colors.whiteBg}}>
+            <View className="bg-white py-5 px-5 flex-row justify-between" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}}>
 
                 <View className="flex flex-row gap-5">
                     <TouchableWithoutFeedback onPress={() => {router.back(); clearInputs()}}>
@@ -136,18 +137,18 @@ export default function Create() {
 
             <ScrollView  >
                 <View style={styles.scrollView} >
-                    <View style={styles.label}>
+                    <View style={{...styles.label, backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                         <Text style={styles.inputTitle}>Title</Text>
-                        <TextInput value={title} onChangeText={(val) => setTitle(val)} placeholder="Enter a Title" style={styles.inputContainer}/>
+                        <TextInput placeholderTextColor={colors.grey} value={title} onChangeText={(val) => setTitle(val)} placeholder="Enter a Title" style={{...styles.inputContainer, color: theme === "dark" ? colors.white : colors.black}}/>
                     </View>
-                    <View style={styles.label}>
+                    <View style={{...styles.label, backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                         <Text style={styles.inputTitle}>Note</Text>
-                        <TextInput value={text} onChangeText={(val) => setText(val)} multiline numberOfLines={5} placeholder="Enter additional info" style={compose(styles.inputContainer, styles.textInput)}/>
+                        <TextInput placeholderTextColor={colors.grey} value={text} onChangeText={(val) => setText(val)} multiline numberOfLines={5} placeholder="Enter additional info" style={{...styles.inputContainer, ...styles.textInput, color: theme === "dark" ? colors.white : colors.black}}/>
                     </View>
-                    <View style={styles.label}>
+                    <View style={{...styles.label, backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                         <Text style={styles.inputTitle}>Categories</Text>
                         <View className="flex flex-row justify-between items-center">
-                            <TextInput value={category} className="w-[80%]" onChangeText={(val) => setCategory(val)} placeholder="Enter Category" style={styles.inputContainer}/>
+                            <TextInput placeholderTextColor={colors.grey} value={category} className="w-[80%]" onChangeText={(val) => setCategory(val)} placeholder="Enter Category" style={{...styles.inputContainer, color: theme === "dark" ? colors.white : colors.black}}/>
                             <TouchableOpacity onPress={() => addCategory(category)}>
                                 <Ionicons className="bg-primary rounded-full p-2" color="white" name="add-outline" size={30} />
                             </TouchableOpacity>
@@ -156,12 +157,12 @@ export default function Create() {
                             {noteCategoriesComponent}
                         </View>
                     </View>
-                    <View style={styles.label}>
+                    <View style={{...styles.label, backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                         <Text style={styles.inputTitle}>Deadline</Text>
                         <View className="flex flex-row justify-between items-center mb-5">
                             <View style={styles.inputContainer} className="w-[80%] flex flex-row justify-between items-center">
-                                <Text >{textDate}</Text>
-                                <TouchableOpacity onPress={() => {setTextDate("No Time Provided"); setDate(null)}}>
+                                <Text style={{color: colors.grey}} >{textDate}</Text>
+                                <TouchableOpacity onPress={() => {setTextDate("No Date Provided"); setDate(null)}}>
                                     <Ionicons color={"#BE2528"} name="close-outline" size={20} />
                                 </TouchableOpacity>
                             </View>
@@ -174,7 +175,7 @@ export default function Create() {
                         </View>
                         <View className="flex flex-row justify-between items-center mb-5">
                             <View style={styles.inputContainer} className="w-[80%] flex flex-row justify-between items-center">
-                                <Text >{textTime}</Text>
+                                <Text style={{color: colors.grey}} >{textTime}</Text>
                                 <TouchableOpacity onPress={() => {setTextTime("No Time Provided"); setTime(null)}}>
                                     <Ionicons color={"#BE2528"} name="close-outline" size={20} />
                                 </TouchableOpacity>
@@ -199,6 +200,7 @@ export default function Create() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
     },
     scrollView: {
         padding: 10,
@@ -211,6 +213,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 2,
         borderColor: colors.primary,
+
     },
     inputTitle: {
         textAlign: "center",
