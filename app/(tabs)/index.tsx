@@ -1,18 +1,15 @@
 import {
     View,
     Text,
-    TouchableWithoutFeedback,
     FlatList,
     SafeAreaView,
     TouchableOpacity,
     Image,
     useColorScheme
 } from 'react-native'
-import React, {useEffect} from 'react'
-import {Header} from "@react-navigation/elements";
+import React from 'react'
 import Note from "@/components/Note";
-import {addNote, deleteAllNotes, deleteNote, getAllNotes} from "@/lib/storage";
-import {uuid} from "expo-modules-core";
+import {deleteNote, getAllNotes} from "@/lib/storage";
 import {useFocusEffect, useRouter} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
 import colors from "@/constants/colors";
@@ -24,7 +21,7 @@ export default function Index() {
     const router = useRouter();
 
     const handleDeleteNote = async (id: string) => {
-        await deleteNote(id); // Make sure you have this function in your storage lib
+        await deleteNote(id);
         const updatedNotes = await getAllNotes();
         setNotes(updatedNotes);
     };
@@ -40,6 +37,8 @@ export default function Index() {
         }, [])
     );
 
+
+
     return (
             <View style={{flex: 1, backgroundColor: theme === "dark" ? colors.darkBg : colors.whiteBg}}>
                 <View style={{backgroundColor: theme === "dark" ? colors.black : colors.white}} className="py-5 px-5 flex flex-row justify-between">
@@ -48,7 +47,7 @@ export default function Index() {
                         <Ionicons name="add" size={30} color={colors.primary} />
                     </TouchableOpacity>
                 </View>
-                {notes.length === 0 ? <View className="flex flex-col justify-center items-center mt-32 m-5 p-3 rounded-2xl">
+                {!notes ? <View className="flex flex-col justify-center items-center mt-32 m-5 p-3 rounded-2xl">
                     <Image source={require("@/assets/images/empty.png")} resizeMode={"cover"} style={{width: 200, height: 200}} />
                     <Text className="text-2xl text-gray-400">Quite empty here...</Text>
                 </View> :

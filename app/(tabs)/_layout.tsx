@@ -1,5 +1,5 @@
 import React from 'react'
-import {Stack, Tabs, useSegments} from "expo-router";
+import {Tabs, useSegments} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
 import "../../global.css"
 import { StatusBar } from "expo-status-bar";
@@ -42,10 +42,10 @@ export default function _Layout() {
                 headerShown: false,
                 tabBarStyle: {display: segments[1] === "create" ? 'none' : "flex"}
             }} />
-            {/*<Tabs.Screen name="settings" options={{*/}
-            {/*    tabBarIcon: ({size, color}) => <Ionicons name="settings" size={size} color={color} />,*/}
-            {/*    headerShown: false*/}
-            {/*}} />*/}
+            <Tabs.Screen name="settings" options={{
+                tabBarIcon: ({size, color}) => <Ionicons name="settings" size={size} color={color} />,
+                headerShown: false
+            }} />
 
         </Tabs>
         </>

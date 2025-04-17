@@ -1,5 +1,4 @@
 import {
-    Button,
     ScrollView,
     StyleSheet,
     Text,
@@ -11,7 +10,6 @@ import {
 } from 'react-native'
 import React, {useState} from 'react'
 import colors from "@/constants/colors";
-import compose = StyleSheet.compose;
 import {Ionicons} from "@expo/vector-icons";
 import {addNote} from "@/lib/storage";
 import {uuid} from "expo-modules-core";

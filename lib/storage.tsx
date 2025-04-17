@@ -47,7 +47,7 @@ export const getAllNotes = async () => {
 
 export const deleteAllNotes = async () => {
     try {
-        const deletedNotes = await AsyncStorage.removeItem('notes');
+         await AsyncStorage.removeItem('notes');
     } catch (error) {
         console.error("Error in clearNotes", error);
     }
@@ -66,4 +66,3 @@ export const changeNote = async (note: {id: string}) => {
         console.error("Error in getAllNotes", error);
     }
 }
-

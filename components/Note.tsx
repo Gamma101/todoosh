@@ -2,10 +2,10 @@ import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet, ScrollView, 
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {GestureHandlerRootView, Swipeable} from "react-native-gesture-handler";
-import {changeNote, deleteNote} from "@/lib/storage";
+import {changeNote} from "@/lib/storage";
 import Category from "@/components/Category";
+import colors from "@/constants/colors";
 import {formatDate, formatTime} from "@/lib/dateHandler";
-import colors from "@/constants/colors"; // Make sure you have this import
 
 export default function Note({ categories, id, isCompleted, text, title, endDate, endTime, onDelete}: {
     endDate: Date,
@@ -15,19 +15,20 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
     isCompleted: boolean,
     text: string,
     title: string,
-    onDelete: (id: string) => void // Add this prop
+    onDelete: (id: string) => void
 }): JSX.Element {
 
     const theme = useColorScheme()
 
     const [noteComplete, setNoteComplete] = React.useState<boolean>();
 
+
+
     const noteCategories = () => {
         return categories.map((category: string, i: number) => {
             return <Category isJustToWatch={true} categoryName={category} key={i} />
         })
     }
-    console.log(endTime)
     const noteCategoriesComponent = noteCategories();
 
     const handleChangeNote = async () => {
@@ -38,7 +39,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
             id,
             text,
             title,
-            isCompleted: !noteComplete, // Toggle current state
+            isCompleted: !noteComplete,
         };
         await changeNote(updatedNote);
     };
@@ -90,8 +91,8 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
 
                 </Swipeable>
                 {categories.length > 0 &&
-                    <ScrollView horizontal>
-                    <View className="flex flex-row gap-2 p-3">
+                    <ScrollView style={{borderRadius: 10, margin: 12}} horizontal>
+                    <View className="flex flex-row gap-2">
                         {noteCategoriesComponent}
                     </View>
                 </ScrollView>}
