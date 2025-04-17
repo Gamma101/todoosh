@@ -47,7 +47,7 @@ export const getAllNotes = async () => {
 
 export const deleteAllNotes = async () => {
     try {
-         await AsyncStorage.removeItem('notes');
+         await AsyncStorage.setItem('notes', JSON.stringify([]));
     } catch (error) {
         console.error("Error in clearNotes", error);
     }
