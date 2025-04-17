@@ -3,10 +3,12 @@ import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {GestureHandlerRootView, Swipeable} from "react-native-gesture-handler";
 import {changeNote, deleteNote} from "@/lib/storage";
-import Category from "@/components/Category"; // Make sure you have this import
+import Category from "@/components/Category";
+import {formatDate, formatTime} from "@/lib/dateHandler"; // Make sure you have this import
 
-export default function Note({ categories, id, isCompleted, text, title, endDate, onDelete}: {
+export default function Note({ categories, id, isCompleted, text, title, endDate, endTime, onDelete}: {
     endDate: Date,
+    endTime: Date,
     categories: Array<string>,
     id: string,
     isCompleted: boolean,
@@ -22,7 +24,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
             return <Category isJustToWatch={true} categoryName={category} key={i} />
         })
     }
-
+    console.log(endTime)
     const noteCategoriesComponent = noteCategories();
 
     const handleChangeNote = async () => {
@@ -67,7 +69,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
                     rightThreshold={40}
                     friction={2}
                 >
-                    <View className={`flex flex-row items-center my-2 `}>
+                    <View className={`flex flex-row items-center my-2 px-2`}>
                         <TouchableWithoutFeedback onPress={async () => {
                             const newState = !noteComplete;
                             setNoteComplete(newState);
@@ -89,6 +91,24 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
                         {noteCategoriesComponent}
                     </View>
                 </ScrollView>}
+
+                <View className="flex flex-row gap-2 justify-between">
+                    {
+                        endTime &&
+                        <View className="flex flex-row gap-2 px-3 items-center">
+                            <Ionicons name="alarm-outline" size={20} color="white" className="bg-primary p-1 rounded-md" />
+                            <Text>{formatTime(new Date(endTime)).text}</Text>
+                        </View>
+                    }
+                    {
+                        endDate &&
+                        <View className="flex flex-row gap-2 px-3 items-center">
+                            <Ionicons name="calendar-outline" size={20} color="white" className="bg-primary p-1 rounded-md" />
+                            <Text>{formatDate(new Date(endDate)).text}</Text>
+                        </View>
+                    }
+
+                </View>
             </View>
         </GestureHandlerRootView>
     )

@@ -17,14 +17,25 @@ import {addNote} from "@/lib/storage";
 import {uuid} from "expo-modules-core";
 import {useFocusEffect, useRouter} from "expo-router";
 import Category from "@/components/Category";
-
+import RNDateTimePicker, {DateTimePickerEvent} from "@react-native-community/datetimepicker";
+import {formatDate, formatTime} from "@/lib/dateHandler";
 
 export default function Create() {
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [category, setCategory] = useState("");
     const [categories, setCategories]  = useState<string[]>([])
+
+
+    const [date, setDate] = useState<Date | null>(null);
+    const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+
+    const [time, setTime] = useState<Date | null>(null);
+    const [showTimePicker, setShowTimePicker] = useState(false);
     const router = useRouter()
+
+    const [textDate, setTextDate] = useState<string>("No Data Provided");
+    const [textTime, setTextTime] = useState<string>("No Time Provided");
 
     function deleteCategory(categoryToDelete: string) {
         const newCategory = categories.filter(category => category != categoryToDelete);
@@ -38,6 +49,26 @@ export default function Create() {
     }
 
     const noteCategoriesComponent = noteCategories();
+
+    function onChangeDate(e: DateTimePickerEvent, selectedDate: Date | undefined) {
+        if (selectedDate) {
+            setDate(selectedDate);
+            setShowDateTimePicker(false);
+            setTextDate(formatDate(selectedDate).text)
+        }
+
+    }
+
+    function onChangeTime(e: DateTimePickerEvent, selectedTime: Date | undefined) {
+        if (selectedTime) {
+            setTime(selectedTime);
+            setShowTimePicker(false);
+            setTextTime(formatTime(selectedTime).text);
+
+        }
+    }
+
+
 
     function addCategory(categoryToAdd: string) {
         if(!categories.includes(categoryToAdd)) {
@@ -53,6 +84,10 @@ export default function Create() {
         setText("");
         setCategory("");
         setCategories([])
+        setTime(null)
+        setDate(null)
+        setTextTime("No Time Provided");
+        setTextDate("No Date Provided");
     }
 
     async function sendForm() {
@@ -61,7 +96,8 @@ export default function Create() {
             const newNote = {
                 title,
                 text,
-                endDate: new Date(),
+                endDate: date,
+                endTime: time,
                 isCompleted: false,
                 categories: categories,
                 id: uuid.v4()
@@ -120,7 +156,38 @@ export default function Create() {
                             {noteCategoriesComponent}
                         </View>
                     </View>
+                    <View style={styles.label}>
+                        <Text style={styles.inputTitle}>Deadline</Text>
+                        <View className="flex flex-row justify-between items-center mb-5">
+                            <View style={styles.inputContainer} className="w-[80%] flex flex-row justify-between items-center">
+                                <Text >{textDate}</Text>
+                                <TouchableOpacity onPress={() => {setTextDate("No Time Provided"); setDate(null)}}>
+                                    <Ionicons color={"#BE2528"} name="close-outline" size={20} />
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity onPress={() => setShowDateTimePicker(true)}>
+                                <Ionicons className="bg-primary rounded-full p-2" color="white" name="calendar-outline" size={30} />
+                            </TouchableOpacity>
+                            {
+                                showDateTimePicker && (<RNDateTimePicker onChange={onChangeDate} mode={"date"} value={date || new Date()} />)
+                            }
+                        </View>
+                        <View className="flex flex-row justify-between items-center mb-5">
+                            <View style={styles.inputContainer} className="w-[80%] flex flex-row justify-between items-center">
+                                <Text >{textTime}</Text>
+                                <TouchableOpacity onPress={() => {setTextTime("No Time Provided"); setTime(null)}}>
+                                    <Ionicons color={"#BE2528"} name="close-outline" size={20} />
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+                                <Ionicons className="bg-primary rounded-full p-2" color="white" name="alarm-outline" size={30} />
+                            </TouchableOpacity>
+                            {
+                                showTimePicker && (<RNDateTimePicker onChange={onChangeTime} mode={"time"} value={time || new Date()} />)
+                            }
+                        </View>
 
+                    </View>
 
 
                 </View>
