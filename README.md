@@ -1,15 +1,21 @@
 ![image with 2 phone screens showing the app](./assets/images/brand.png)
 
-## **ToDoosh is a Simple Note-taking/ToDo App, where you can write your tasks or ideas!**
+## ToDoosh is a Simple Note-taking / ToDo App, where you can write your tasks or ideas!
 
 ![image with 2 phone screens showing the app](./assets/images/github-present.png)
 
 ## Functionality
 
-- #### Create, delete notes
-- #### Adding Title, Note Text, 
-- #### Categories Feature
-- #### Note Deadline
+-  Create, delete notes
+- Adding Title, Note Text, 
+- Categories Feature
+- Note Deadline
+
+## Technologies Used
+- TypeScript
+- React Native
+- Expo
+- Tailwind / Nativewind
 
 ## How to Try It
 
