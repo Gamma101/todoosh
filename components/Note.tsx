@@ -1,4 +1,13 @@
-import {View, Text, TouchableWithoutFeedback, Animated, StyleSheet, ScrollView, useColorScheme} from 'react-native'
+import {
+    View,
+    Text,
+    TouchableWithoutFeedback,
+    Animated,
+    StyleSheet,
+    ScrollView,
+    useColorScheme,
+    TouchableOpacity
+} from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {GestureHandlerRootView, Swipeable} from "react-native-gesture-handler";
@@ -6,6 +15,7 @@ import {changeNote} from "@/lib/storage";
 import Category from "@/components/Category";
 import colors from "@/constants/colors";
 import {formatDate, formatTime} from "@/lib/dateHandler";
+import {Link, useRouter} from "expo-router";
 
 export default function Note({ categories, id, isCompleted, text, title, endDate, endTime, onDelete}: {
     endDate: Date,
@@ -21,6 +31,8 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
     const theme = useColorScheme()
 
     const [noteComplete, setNoteComplete] = React.useState<boolean>();
+
+    const router = useRouter()
 
 
 
@@ -68,6 +80,8 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
     return (
         <GestureHandlerRootView>
             <View style={{backgroundColor: theme === "dark" ? colors.black : colors.white}} className={`${noteComplete ? "bg-blue-100" : "bg-white"} p-2 w-[90%] self-center rounded-xl mb-5`}>
+                {/*@ts-ignore*/}
+                <TouchableOpacity activeOpacity={1} onPress={() => router.push(`/note/${id}`)}>
                 <Swipeable
                     renderRightActions={renderRightActions}
                     onSwipeableOpen={() => onDelete(id)}
@@ -114,6 +128,7 @@ export default function Note({ categories, id, isCompleted, text, title, endDate
                     }
 
                 </View>
+                </TouchableOpacity>
             </View>
         </GestureHandlerRootView>
     )

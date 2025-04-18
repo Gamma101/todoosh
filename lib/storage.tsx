@@ -66,3 +66,19 @@ export const changeNote = async (note: {id: string}) => {
         console.error("Error in getAllNotes", error);
     }
 }
+
+export const findNoteById = async (id: string | string[]) => {
+    try {
+        const data = await AsyncStorage.getItem('notes')
+
+        if(data !== null){
+            const notes = JSON.parse(data);
+            const noteById = notes.filter((note: { id: string; }) => note.id === id);
+            return noteById[0]
+        }
+
+        return null
+    } catch (error) {
+        console.error("Error in findNoteById", error);
+    }
+}

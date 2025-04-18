@@ -11,7 +11,7 @@ import {
 import React from 'react'
 import Note from "@/components/Note";
 import {deleteNote, getAllNotes} from "@/lib/storage";
-import {useFocusEffect, useRouter} from "expo-router";
+import {Link, useFocusEffect, useRouter} from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
 import colors from "@/constants/colors";
 
@@ -46,6 +46,7 @@ export default function Index() {
                         <Ionicons name="add" size={30} color={colors.primary} />
                     </TouchableOpacity>
                 </View>
+
                 {notes && notes.length === 0 ? <View className="flex flex-col justify-center items-center mt-32 m-5 p-3 rounded-2xl">
                     <Image source={require("@/assets/images/empty.png")} resizeMode={"cover"} style={{width: 200, height: 200}} />
                     <Text className="text-2xl text-gray-400">Quite empty here...</Text>
@@ -64,6 +65,8 @@ export default function Index() {
                     />)}
                 </SafeAreaView>
                 }
+
+
             </View>
 
     )
