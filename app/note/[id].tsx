@@ -6,6 +6,7 @@ import colors from "@/constants/colors";
 import {Ionicons} from "@expo/vector-icons";
 import Category from "@/components/Category";
 import {formatDate, formatTime} from "@/lib/dateHandler";
+import {StatusBar} from "expo-status-bar";
 
 export default function Id() {
     const theme = useColorScheme();
@@ -45,6 +46,7 @@ export default function Id() {
     },[])
     return (
         <View style={{backgroundColor: theme === "dark" ? colors.darkBg : colors.whiteBg, flex: 1}}>
+            <StatusBar  style={theme === "dark" ? "light" : "dark"} backgroundColor={theme === "dark" ? "black" : "white"} translucent={true} />
             <View className="bg-white py-5 px-5 flex flex-row justify-between items-center" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                 <View className="flex flex-row justfy-center gap-5">
                     <TouchableWithoutFeedback onPress={() => {router.back()}}>
