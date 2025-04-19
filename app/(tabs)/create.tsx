@@ -70,7 +70,7 @@ export default function Create() {
 
 
     function addCategory(categoryToAdd: string) {
-        if(!categories.includes(categoryToAdd)) {
+        if(!categories.includes(categoryToAdd) && categoryToAdd) {
             const newCategory = [...categories, categoryToAdd];
             setCategories(newCategory)
 

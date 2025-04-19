@@ -10,6 +10,7 @@
 - Adding Title, Note Text, 
 - Categories Feature
 - Note Deadline
+- Automatic dark theme support
 
 ## Technologies Used
 - TypeScript
