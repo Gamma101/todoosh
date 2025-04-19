@@ -49,9 +49,9 @@ export default function Id() {
             <StatusBar  style={theme === "dark" ? "light" : "dark"} backgroundColor={theme === "dark" ? "black" : "white"} translucent={true} />
             <View className="bg-white py-5 px-5 flex flex-row justify-between items-center" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                 <View className="flex flex-row justfy-center gap-5">
-                    <TouchableWithoutFeedback onPress={() => {router.back()}}>
+                    <TouchableOpacity onPress={() => {router.back()}}>
                         <Ionicons name={"arrow-back-outline"} color={colors.primary} size={30} />
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                     <Text className="text-3xl font-bold text-primary">Todoosh</Text>
                 </View>
                 <View className="flex flex-row justify-center items-center gap-5">

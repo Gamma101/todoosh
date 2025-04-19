@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3bff2592-fe67-44d5-88fc-55421ddf6abb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/create.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/create.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +37,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Programming/.Mobile Development/ToDoosh/assets/images",
+    "last_opened_file_path": "C:/Programming/.Mobile Development/ToDoosh",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,6 +84,7 @@
       <workItem from="1744956950169" duration="6770000" />
       <workItem from="1744971292810" duration="830000" />
       <workItem from="1744984215390" duration="672000" />
+      <workItem from="1745078437089" duration="392000" />
     </task>
     <servers />
   </component>

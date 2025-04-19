@@ -123,14 +123,14 @@ export default function Create() {
             <View className="bg-white py-5 px-5 flex-row justify-between" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}}>
 
                 <View className="flex flex-row gap-5">
-                    <TouchableWithoutFeedback onPress={() => {router.back(); clearInputs()}}>
+                    <TouchableOpacity onPress={() => {router.back(); clearInputs()}}>
                         <Ionicons name={"arrow-back-outline"} color={colors.primary} size={30} />
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                     <Text className="text-3xl font-bold text-primary">Todoosh</Text>
                 </View>
-                <TouchableWithoutFeedback onPress={() => sendForm()}>
+                <TouchableOpacity onPress={() => sendForm()}>
                     <Ionicons name={"checkmark"} color={colors.primary} size={30} />
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </View>
 
             <ScrollView  >
