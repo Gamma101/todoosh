@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, useColorScheme, TouchableWithoutFeedback, ScrollView} from 'react-native'
 import React, {useEffect, useState} from 'react'
 import {useLocalSearchParams, useRouter} from "expo-router";
-import {deleteNote, findNoteById} from "@/lib/storage";
+import {changeNote, deleteNote, findNoteById} from "@/lib/storage";
 import colors from "@/constants/colors";
 import {Ionicons} from "@expo/vector-icons";
 import Category from "@/components/Category";
@@ -20,6 +20,7 @@ export default function Id() {
         isCompleted: undefined,
         text: undefined,
     });
+
 
     const router = useRouter();
 
@@ -43,9 +44,19 @@ export default function Id() {
 
         getNoteData()
 
-    },[])
+    },[noteData])
+
+
+    const handleChangeNote = async () => {
+        const updatedNote = {...noteData, isCompleted: !noteData.isCompleted}
+        setNoteData(updatedNote)
+        await changeNote(updatedNote);
+    };
+
+
     return (
         <View style={{backgroundColor: theme === "dark" ? colors.darkBg : colors.whiteBg, flex: 1}}>
+
             <StatusBar  style={theme === "dark" ? "light" : "dark"} backgroundColor={theme === "dark" ? "black" : "white"} translucent={true} />
             <View className="bg-white py-5 px-5 flex flex-row justify-between items-center" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}}>
                 <View className="flex flex-row justfy-center gap-5">
@@ -55,6 +66,12 @@ export default function Id() {
                     <Text className="text-3xl font-bold text-primary">Todoosh</Text>
                 </View>
                 <View className="flex flex-row justify-center items-center gap-5">
+                    <TouchableWithoutFeedback onPress={async () => {
+                        await handleChangeNote();
+                    }}>
+                        {noteData.isCompleted ? <Ionicons name="checkmark-circle-outline" className="bg-primary rounded-full" color="white" size={30} /> :
+                            <Ionicons name="ellipse-outline" className="rounded-full" color={theme === "dark" ? "white" : "black"} size={30} />}
+                    </TouchableWithoutFeedback>
                     <TouchableOpacity onPress={() => router.push("/(tabs)/create")}>
                         <Ionicons name={"pencil-outline"} color={colors.primary} size={27} />
                     </TouchableOpacity>
@@ -62,11 +79,12 @@ export default function Id() {
                 <TouchableOpacity onPress={async () => {await deleteNote(noteData.id); router.back()}}>
                         <Ionicons name={"trash-outline"} color={"red"} size={27} />
                     </TouchableOpacity>
+
                 </View>
             </View>
             <View>
                 <View className="flex justify-center items-center m-5 p-5 rounded-xl gap-5" style={{backgroundColor: theme === "dark" ? colors.black : colors.white}} >
-                    <Text className="text-primary text-2xl font-bold text-left">{noteData.title}</Text>
+                        <Text className="text-primary text-2xl font-bold text-left">{noteData.title}</Text>
                     {noteData.text && <Text className="text-md" style={{color: theme === "dark" ? colors.white : colors.black}}>{noteData.text}</Text>}
                     {noteData.categories ?
                         <View>
